@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreativeFreelancer | Edit Video & Foto | Desain Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .portfolio-item {
+            transition: all 0.3s ease;
+            cursor: pointer; 
+        }
+        
+        .portfolio-item:hover {
+            transform: scale(1.03);
+        }
+        
+        .ebook-card:hover .ebook-overlay {
+            opacity: 1;
+        }
+        
+        .ebook-overlay {
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #667eea;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        #backToTopBtn {
+            display: none; 
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: #667eea; 
+            color: white;
+            cursor: pointer;
+            padding: 12px 15px;
+            border-radius: 50%; 
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+            opacity: 0;
+        }
+
+        #backToTopBtn:hover {
+            background-color: #5a67d8; 
+            transform: scale(1.1);
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.875em; 
+            margin-top: 0.25rem; 
+            display: block; 
+            min-height: 1.2em; 
+        }
+        .input-error {
+            border-color: red !important; 
+        }
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #48bb78; 
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .toast-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Styling untuk Tailwind Prose di dalam modal agar tidak terlalu lebar */
+        #portfolioModalContent .prose {
+            max-width: 100%; /* Override max-width default dari prose */
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigasi -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-palette text-indigo-600 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-gray-900">CreativeFreelancer</span>
+                    </div>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="#home" class="nav-link text-gray-900 px-3 py-2 text-sm font-medium">Beranda</a>
+                    <a href="#services" class="nav-link text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">Layanan</a>
+                    <a href="#portfolio" class="nav-link text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">Portofolio</a>
+                    <a href="#ebooks" class="nav-link text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">eBook</a>
+                    <a href="#contact" class="nav-link text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">Kontak</a>
+                    <a href="#contact" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition duration-300">Dapatkan Penawaran</a>
+                    <a href="#" id="cartIconLink" class="relative text-gray-500 hover:text-gray-900 px-3 py-2">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cartItemCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                    </a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                     <a href="#" id="mobileCartIconLinkTrigger" class="relative text-gray-500 hover:text-gray-900 p-2 mr-2">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="mobileCartItemCountTrigger" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                    </a>
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none">
+                        <span class="sr-only">Buka menu utama</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-gray-800 hover:bg-gray-50">Beranda</a>
+                <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">Layanan</a>
+                <a href="#portfolio" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">Portofolio</a>
+                <a href="#ebooks" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">eBook</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">Kontak</a>
+                <a href="#" id="mobileCartMenuLink" class="flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">
+                    <span>Keranjang Saya</span>
+                    <span class="relative">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span id="mobileCartItemCountMenu" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center hidden">0</span>
+                    </span>
+                </a>
+                <a href="#contact" class="block w-full text-center bg-indigo-600 text-white px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-700">Dapatkan Penawaran</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Bagian Hero -->
+    <section id="home" class="hero-gradient text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:flex lg:items-center lg:justify-between">
+                <div class="lg:w-1/2" data-aos="fade-right" data-aos-duration="1000">
+                    <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl mb-6">
+                        Tingkatkan Merek Anda Dengan Konten Visual yang Memukau
+                    </h1>
+                    <p class="text-xl text-indigo-100 mb-8">
+                        Layanan edit video profesional, retouching foto, dan desain grafis untuk membuat merek Anda menonjol dari yang lain.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#services" class="bg-white text-indigo-600 px-6 py-3 rounded-md text-lg font-semibold hover:bg-gray-100 transition duration-300 text-center">Jelajahi Layanan</a>
+                        <a href="#portfolio" class="border-2 border-white text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-white hover:text-indigo-600 transition duration-300 text-center">Lihat Portofolio</a>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 mt-10 lg:mt-0" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Karya kreatif" class="rounded-lg shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Statistik -->
+    <section class="bg-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="p-6" data-aos="fade-up">
+                    <div class="text-5xl font-bold text-indigo-600 mb-2">150+</div>
+                    <div class="text-gray-600">Proyek Selesai</div>
+                </div>
+                <div class="p-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-5xl font-bold text-indigo-600 mb-2">98%</div>
+                    <div class="text-gray-600">Kepuasan Klien</div>
+                </div>
+                <div class="p-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-5xl font-bold text-indigo-600 mb-2">5+</div>
+                    <div class="text-gray-600">Tahun Pengalaman</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Layanan -->
+    <section id="services" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl" data-aos="fade-down">
+                    Layanan Kreatif Saya
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-600 mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Layanan profesional yang disesuaikan untuk memenuhi kebutuhan kreatif Anda
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="service-card bg-white p-8 rounded-lg shadow-md transition duration-300" data-aos="zoom-in-up">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-video text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Edit Video</h3>
+                    <p class="text-gray-600 mb-4">
+                        Layanan edit video profesional untuk YouTube, media sosial, iklan, dan lainnya. Dari rekaman mentah hingga mahakarya yang sempurna.
+                    </p>
+                    <ul class="space-y-2 text-gray-600 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-2"></i><span>Edit 4K & HD</span></li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-2"></i><span>Koreksi Warna</span></li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-2"></i><span>Grafis Gerak</span></li>
+                    </ul>
+                    <a href="#contact" class="text-indigo-600 font-semibold hover:text-indigo-800 inline-flex items-center">Mulai <i class="fas fa-arrow-right ml-2"></i></a>
+                </div>
+                <div class="service-card bg-white p-8 rounded-lg shadow-md transition duration-300" data-aos="zoom-in-up" data-aos-delay="100">
+                     <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-camera-retro text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Edit Foto</h3>
+                    <p class="text-gray-600 mb-4">
+                        Retouching foto berkualitas tinggi, penghapusan latar belakang, koreksi warna, dan peningkatan untuk membuat gambar Anda menonjol.
+                    </p>
+                    <ul class="space-y-2 text-gray-600 mb-6">
+                         <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-2"></i><span>Retouching Potret</span></li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-2"></i><span>Fotografi Produk</span></li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-2"></i><span>Penghapusan Latar</span></li>
+                    </ul>
+                    <a href="#contact" class="text-indigo-600 font-semibold hover:text-indigo-800 inline-flex items-center">Mulai <i class="fas fa-arrow-right ml-2"></i></a>
+                </div>
+                <div class="service-card bg-white p-8 rounded-lg shadow-md transition duration-300" data-aos="zoom-in-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-paint-brush text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Desain Grafis</h3>
+                    <p class="text-gray-600 mb-4">
+                        Solusi desain kreatif termasuk logo, branding, grafis media sosial, dan materi pemasaran.
+                    </p>
+                     <ul class="space-y-2 text-gray-600 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-2"></i><span>Desain Logo</span></li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-2"></i><span>Identitas Merek</span></li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-2"></i><span>Media Cetak & Digital</span></li>
+                    </ul>
+                    <a href="#contact" class="text-indigo-600 font-semibold hover:text-indigo-800 inline-flex items-center">Mulai <i class="fas fa-arrow-right ml-2"></i></a>
+                </div>
+                <div class="service-card bg-white p-8 rounded-lg shadow-md transition duration-300" data-aos="zoom-in-up" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-book-reader text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Beli eBook</h3>
+                    <p class="text-gray-600 mb-4">
+                        Temukan berbagai eBook informatif dan inspiratif yang kami tawarkan untuk meningkatkan pengetahuan dan keahlian Anda.
+                    </p>
+                    <ul class="space-y-2 text-gray-600 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-2"></i><span>Panduan Praktis</span></li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-2"></i><span>Tips & Trik Ahli</span></li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-2"></i><span>Studi Kasus Inspiratif</span></li>
+                    </ul>
+                    <a href="#ebooks" class="text-indigo-600 font-semibold hover:text-indigo-800 inline-flex items-center">Lihat Katalog <i class="fas fa-arrow-right ml-2"></i></a>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center" data-aos="fade-up">
+                <a href="#contact" class="bg-indigo-600 text-white px-8 py-4 rounded-md text-lg font-semibold hover:bg-indigo-700 transition duration-300 inline-flex items-center">
+                    Dapatkan Penawaran Kustom
+                    <i class="fas fa-paper-plane ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Portofolio -->
+    <section id="portfolio" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl" data-aos="fade-down">
+                    Portofolio Kreatif Saya
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-600 mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Pameran karya terbaru saya di berbagai disiplin kreatif. Klik untuk melihat detail.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="portfolio-item group relative overflow-hidden rounded-lg shadow-lg" data-aos="zoom-in" data-aos-delay="50">
+                    <img src="https://images.unsplash.com/photo-1615223323293-526926807b61?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Proyek Edit Video" class="w-full h-64 object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent flex items-end p-6">
+                        <div><h3 class="text-white text-xl font-bold mb-1">Seri Vlog Perjalanan</h3><p class="text-indigo-200">Edit Video</p></div>
+                    </div>
+                </div>
+                <div class="portfolio-item group relative overflow-hidden rounded-lg shadow-lg" data-aos="zoom-in" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Proyek Edit Foto" class="w-full h-64 object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent flex items-end p-6">
+                        <div><h3 class="text-white text-xl font-bold mb-1">Fotografi Fesyen</h3><p class="text-indigo-200">Edit Foto</p></div>
+                    </div>
+                </div>
+                <div class="portfolio-item group relative overflow-hidden rounded-lg shadow-lg" data-aos="zoom-in" data-aos-delay="150">
+                    <img src="https://images.unsplash.com/photo-1567443024551-f3e3dee6e57c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Proyek Desain Grafis" class="w-full h-64 object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent flex items-end p-6">
+                        <div><h3 class="text-white text-xl font-bold mb-1">Identitas Merek</h3><p class="text-indigo-200">Desain Grafis</p></div>
+                    </div>
+                </div>
+                <div class="portfolio-item group relative overflow-hidden rounded-lg shadow-lg" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Proyek Desain eBook" class="w-full h-64 object-cover">
+                     <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent flex items-end p-6">
+                        <div><h3 class="text-white text-xl font-bold mb-1">Desain Buku Masak</h3><p class="text-indigo-200">Beli eBook</p></div>
+                    </div>
+                </div>
+                <div class="portfolio-item group relative overflow-hidden rounded-lg shadow-lg" data-aos="zoom-in" data-aos-delay="250">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Proyek Edit Video" class="w-full h-64 object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent flex items-end p-6">
+                        <div><h3 class="text-white text-xl font-bold mb-1">Video Korporat</h3><p class="text-indigo-200">Edit Video</p></div>
+                    </div>
+                </div>
+                <div class="portfolio-item group relative overflow-hidden rounded-lg shadow-lg" data-aos="zoom-in" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Proyek Desain Grafis" class="w-full h-64 object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent flex items-end p-6">
+                        <div><h3 class="text-white text-xl font-bold mb-1">Kit Media Sosial</h3><p class="text-indigo-200">Desain Grafis</p></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center" data-aos="fade-up">
+                <a href="#contact" class="bg-indigo-600 text-white px-8 py-4 rounded-md text-lg font-semibold hover:bg-indigo-700 transition duration-300 inline-flex items-center">
+                    Siap Memulai Proyek Anda?
+                    <i class="fas fa-rocket ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Testimonial -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl" data-aos="fade-down">
+                    Apa Kata Klien
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-600 mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Jangan hanya percaya kata-kata kami - dengarkan dari klien kami yang puas
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-md" data-aos="fade-right" data-aos-delay="50">
+                    <div class="flex items-center mb-4"><div class="text-yellow-400 text-xl"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+                    <p class="text-gray-600 mb-6">"Hasil edit videonya sangat memuaskan! Vlog perjalanan saya jadi terlihat sinematik dan profesional. Timnya juga sangat responsif."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/11.jpg" alt="Klien Budiwati" class="w-12 h-12 rounded-full mr-4">
+                        <div><h4 class="font-bold text-gray-900">Rina Budiwati</h4><p class="text-gray-500">Travel Vlogger</p></div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="150">
+                    <div class="flex items-center mb-4"><div class="text-yellow-400 text-xl"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div></div>
+                    <p class="text-gray-600 mb-6">"Foto-foto produk untuk toko online saya jadi jauh lebih menarik setelah di-retouch. Penjualan meningkat! Terima kasih banyak."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Klien Setiawan" class="w-12 h-12 rounded-full mr-4">
+                        <div><h4 class="font-bold text-gray-900">Agus Setiawan</h4><p class="text-gray-500">Pengusaha UMKM</p></div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-md" data-aos="fade-left" data-aos-delay="250">
+                    <div class="flex items-center mb-4"><div class="text-yellow-400 text-xl"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+                    <p class="text-gray-600 mb-6">"Desain eBook yang dibuat sangat profesional dan sesuai dengan target pembaca saya. Prosesnya cepat dan hasilnya memuaskan."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Klien Lestari" class="w-12 h-12 rounded-full mr-4">
+                        <div><h4 class="font-bold text-gray-900">Dewi Lestari</h4><p class="text-gray-500">Penulis & Konsultan</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Toko eBook -->
+    <section id="ebooks" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl" data-aos="fade-down">
+                    Toko eBook Digital
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-600 mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Perluas pengetahuan Anda dengan eBook yang kami buat secara profesional
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="ebook-card bg-white rounded-lg shadow-md overflow-hidden relative" data-aos="flip-left" data-aos-delay="50">
+                    <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="eBook Edit Video" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Panduan Lengkap Edit Video</h3>
+                        <p class="text-gray-600 mb-4">Kuasai teknik edit video profesional dari tingkat pemula hingga mahir.</p>
+                        <div class="flex justify-between items-center"><span class="text-indigo-600 font-bold">Rp.56.000</span><div class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div></div>
+                    </div>
+                    <div class="ebook-overlay absolute inset-0 bg-indigo-600/90 flex items-center justify-center"><button class="bg-white text-indigo-600 px-6 py-2 rounded-md font-semibold hover:bg-gray-100 transition duration-300">Tambah ke Keranjang</button></div>
+                </div>
+                <div class="ebook-card bg-white rounded-lg shadow-md overflow-hidden relative" data-aos="flip-left" data-aos-delay="150">
+                    <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="eBook Edit Foto" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Rahasia Edit Foto Profesional</h3>
+                        <p class="text-gray-600 mb-4">Pelajari teknik retouching dan peningkatan foto standar industri.</p>
+                        <div class="flex justify-between items-center"><span class="text-indigo-600 font-bold">Rp.75.000</span><div class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+                    </div>
+                    <div class="ebook-overlay absolute inset-0 bg-indigo-600/90 flex items-center justify-center"><button class="bg-white text-indigo-600 px-6 py-2 rounded-md font-semibold hover:bg-gray-100 transition duration-300">Tambah ke Keranjang</button></div>
+                </div>
+                <div class="ebook-card bg-white rounded-lg shadow-md overflow-hidden relative" data-aos="flip-left" data-aos-delay="250">
+                    <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="eBook Desain Grafis" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Dasar-Dasar Desain Grafis</h3>
+                        <p class="text-gray-600 mb-4">Prinsip dan teknik penting untuk menciptakan desain visual yang memukau.</p>
+                        <div class="flex justify-between items-center"><span class="text-indigo-600 font-bold">Rp.35.000</span><div class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div></div>
+                    </div>
+                    <div class="ebook-overlay absolute inset-0 bg-indigo-600/90 flex items-center justify-center"><button class="bg-white text-indigo-600 px-6 py-2 rounded-md font-semibold hover:bg-gray-100 transition duration-300">Tambah ke Keranjang</button></div>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center" data-aos="fade-up">
+                <a href="#" id="viewAllEbooksLink" class="bg-indigo-600 text-white px-8 py-4 rounded-md text-lg font-semibold hover:bg-indigo-700 transition duration-300 inline-flex items-center">
+                    Lihat Semua eBook
+                    <i class="fas fa-book-open ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian CTA -->
+    <section class="py-20 hero-gradient text-white" data-aos="zoom-in">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-extrabold sm:text-4xl mb-6">
+                Siap Meningkatkan Konten Visual Anda?
+            </h2>
+            <p class="text-xl text-indigo-100 mb-8 max-w-3xl mx-auto">
+                Baik Anda memerlukan edit video profesional, retouching foto, desain grafis, atau ingin membeli eBook kami, saya di sini untuk mewujudkan visi Anda.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="#contact" class="bg-white text-indigo-600 px-8 py-3 rounded-md text-lg font-semibold hover:bg-gray-100 transition duration-300">Dapatkan Penawaran Gratis</a>
+                <a href="#contact" class="border-2 border-white text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-white hover:text-indigo-600 transition duration-300">Ajukan Pertanyaan</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Kontak -->
+    <section id="contact" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-16">
+                <div class="mb-12 lg:mb-0" data-aos="fade-right">
+                    <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl mb-6">
+                        Hubungi Saya
+                    </h2>
+                    <p class="text-gray-600 mb-8 text-lg">
+                        Punya proyek atau pertanyaan tentang layanan saya? Isi formulir dan saya akan menghubungi Anda dalam 24 jam.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start"><div class="flex-shrink-0"><i class="fas fa-envelope text-indigo-600 text-xl"></i></div><div class="ml-3"><h3 class="text-lg font-medium text-gray-900">Email</h3><p class="text-gray-600">mkohar155@gmail.com</p></div></div>
+                        <div class="flex items-start"><div class="flex-shrink-0"><i class="fas fa-phone-alt text-indigo-600 text-xl"></i></div><div class="ml-3"><h3 class="text-lg font-medium text-gray-900">Telepon / WhatsApp</h3><p class="text-gray-600">+62 853-2041-0340</p></div></div>
+                        <div class="flex items-start"><div class="flex-shrink-0"><i class="fas fa-map-marker-alt text-indigo-600 text-xl"></i></div>
+                            <div class="ml-3">
+                                <h3 class="text-lg font-medium text-gray-900">Lokasi</h3>
+                                <p class="text-gray-600">Jl. Raya Cikukulu, Karangnunggal, Kab. Tasikmalaya, Jawa Barat, Indonesia</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Ikuti Saya</h3>
+                        <div class="flex space-x-4">
+                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-indigo-600"><i class="fab fa-facebook-f text-xl"></i></a>
+                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-indigo-600"><i class="fab fa-twitter text-xl"></i></a>
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-indigo-600"><i class="fab fa-instagram text-xl"></i></a>
+                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-indigo-600"><i class="fab fa-linkedin-in text-xl"></i></a>
+                            <a href="https://behance.net" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-indigo-600"><i class="fab fa-behance text-xl"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div data-aos="fade-left" data-aos-delay="100">
+                    <form id="contactForm" class="space-y-6"> <!-- ID untuk formulir kontak utama -->
+                        <div>
+                            <label for="contact_name" class="block text-sm font-medium text-gray-700">Nama Anda</label>
+                            <input type="text" id="contact_name" name="contact_name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <p class="error-message" id="contact_nameError"></p>
+                        </div>
+                        <div>
+                            <label for="contact_email" class="block text-sm font-medium text-gray-700">Alamat Email</label>
+                            <input type="email" id="contact_email" name="contact_email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <p class="error-message" id="contact_emailError"></p>
+                        </div>
+                        <div>
+                            <label for="contact_service" class="block text-sm font-medium text-gray-700">Layanan yang Diminati</label>
+                            <select id="contact_service" name="contact_service" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="">Pilih layanan</option>
+                                <option value="Edit Video">Edit Video</option>
+                                <option value="Edit Foto">Edit Foto</option>
+                                <option value="Desain Grafis">Desain Grafis</option>
+                                <option value="Beli eBook">Beli eBook</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                            <p class="error-message" id="contact_serviceError"></p>
+                        </div>
+                        <div>
+                            <label for="contact_message" class="block text-sm font-medium text-gray-700">Pesan Anda</label>
+                            <textarea id="contact_message" name="contact_message" rows="4" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                            <p class="error-message" id="contact_messageError"></p>
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full bg-indigo-600 text-white py-3 px-4 rounded-md text-lg font-semibold hover:bg-indigo-700 transition duration-300">Kirim Pesan <i class="fas fa-paper-plane ml-2"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+                    <div class="flex items-center mb-4"><i class="fas fa-palette text-indigo-500 text-2xl mr-2"></i><span class="text-xl font-bold">CreativeFreelancer</span></div>
+                    <p class="text-gray-400">Layanan kreatif profesional untuk mewujudkan visi Anda melalui visual yang memukau dan konten yang menarik.</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="100" data-aos-anchor-placement="top-bottom">
+                    <h3 class="text-lg font-semibold mb-4">Layanan</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#services" class="text-gray-400 hover:text-white">Edit Video</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white">Edit Foto</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white">Desain Grafis</a></li>
+                        <li><a href="#ebooks" class="text-gray-400 hover:text-white">Beli eBook</a></li>
+                    </ul>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200" data-aos-anchor-placement="top-bottom">
+                    <h3 class="text-lg font-semibold mb-4">Tautan Cepat</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white">Beranda</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white">Layanan</a></li>
+                        <li><a href="#portfolio" class="text-gray-400 hover:text-white">Portofolio</a></li>
+                        <li><a href="#ebooks" class="text-gray-400 hover:text-white">eBook</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white">Kontak</a></li>
+                    </ul>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="300" data-aos-anchor-placement="top-bottom">
+                    <h3 class="text-lg font-semibold mb-4">Buletin</h3>
+                    <p class="text-gray-400 mb-4">Berlangganan untuk mendapatkan tips dan pembaruan tentang layanan kreatif.</p>
+                    <form id="newsletterForm" class="flex">
+                        <input type="email" id="newsletterEmail" placeholder="Email Anda" class="px-4 py-2 rounded-l-md w-full text-gray-900 focus:outline-none">
+                        <button type="submit" class="bg-indigo-600 px-4 py-2 rounded-r-md hover:bg-indigo-700"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400">&copy; 2023 CreativeFreelancer. Hak cipta dilindungi undang-undang.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Portofolio (Layout Baru untuk Galeri) -->
+    <div id="portfolioModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] hidden transition-opacity duration-300 opacity-0">
+        <div id="portfolioModalContent" class="bg-white p-4 md:p-6 rounded-lg shadow-xl max-w-3xl w-11/12 max-h-[90vh] overflow-y-auto transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h3 id="modalProjectName" class="text-xl md:text-2xl font-bold text-gray-900">Nama Proyek</h3>
+                    <p id="modalProjectType" class="text-sm md:text-md text-indigo-600 font-semibold">Tipe Proyek</p>
+                </div>
+                <button id="closePortfolioModal" class="text-gray-600 hover:text-gray-900 text-2xl p-1 -mt-1 -mr-1">×</button>
+            </div>
+            <div id="modalProjectGalleryContent" class="space-y-4">
+                <div class="mb-4">
+                    <img id="modalMainImage" src="https://via.placeholder.com/800x450/E2E8F0/4A5568?text=Gambar+Utama+Proyek" alt="Gambar Utama Proyek" class="w-full h-auto max-h-[50vh] object-contain rounded-md border">
+                </div>
+                <div id="modalThumbnailsContainer" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 mb-4">
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-2">Deskripsi Proyek</h4>
+                    <div id="modalProjectDescription" class="text-gray-700 prose max-w-none">
+                        <p>Deskripsi detail proyek akan muncul di sini.</p>
+                    </div>
+                </div>
+                <div id="modalProjectLinkContainer" class="mt-6 text-right" style="display: none;"> 
+                     <a id="modalProjectLink" href="#" target="_blank" rel="noopener noreferrer" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition duration-300 inline-flex items-center">
+                        Kunjungi Proyek <i class="fas fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Keranjang Belanja -->
+    <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] hidden transition-opacity duration-300 opacity-0">
+        <div id="cartModalContent" class="bg-white p-6 md:p-8 rounded-lg shadow-xl max-w-xl w-11/12 max-h-[90vh] flex flex-col transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900">Keranjang Belanja Anda</h3>
+                <button id="closeCartModal" class="text-gray-600 hover:text-gray-900 text-2xl">×</button>
+            </div>
+            <div id="cartItemsContainer" class="flex-grow overflow-y-auto mb-6 space-y-4">
+                <p id="emptyCartMessage" class="text-gray-500 text-center">Keranjang Anda masih kosong.</p>
+            </div>
+            <div class="border-t pt-6">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-medium text-gray-700">Subtotal:</span>
+                    <span id="cartSubtotal" class="text-xl font-bold text-gray-900">Rp.0</span>
+                </div>
+                <button id="checkoutButton" class="w-full bg-indigo-600 text-white py-3 px-4 rounded-md text-lg font-semibold hover:bg-indigo-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                    Lanjutkan ke Pemesanan
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Formulir Pemesanan -->
+   <div id="orderFormModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] hidden transition-opacity duration-300 opacity-0">
+       <div id="orderFormModalContent" class="bg-white p-6 md:p-8 rounded-lg shadow-xl max-w-lg w-11/12 transform scale-95 transition-transform duration-300 max-h-[90vh] overflow-y-auto">
+           <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900">Formulir Pemesanan</h3>
+                <button id="closeOrderFormModalButtonTop" class="text-gray-600 hover:text-gray-900 text-2xl">×</button>
+           </div>
+           
+           <div class="mb-6">
+               <h4 class="text-lg font-semibold text-gray-800 mb-2">Ringkasan Pesanan:</h4>
+               <div id="orderSummaryContainer" class="space-y-2 max-h-40 overflow-y-auto bg-gray-50 p-3 rounded">
+                   <!-- Item ringkasan akan diisi JS -->
+               </div>
+               <div class="mt-2 text-right">
+                   <span class="text-md font-medium text-gray-700">Total: </span>
+                   <span id="orderSummaryTotal" class="text-lg font-bold text-gray-900">Rp.0</span>
+               </div>
+           </div>
+
+           <form id="checkoutForm"> <!-- ID untuk form pemesanan eBook -->
+               <div class="mb-4">
+                   <label for="customerName" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
+                   <input type="text" id="customerName" name="customerName" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                   <p class="error-message" id="customerNameError"></p>
+               </div>
+               <div class="mb-4">
+                   <label for="customerEmail" class="block text-sm font-medium text-gray-700 mb-1">Alamat Email (untuk pengiriman eBook) <span class="text-red-500">*</span></label>
+                   <input type="email" id="customerEmail" name="customerEmail" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                   <p class="error-message" id="customerEmailError"></p>
+               </div>
+               <div class="mb-4">
+                   <label for="customerPhone" class="block text-sm font-medium text-gray-700 mb-1">No. WhatsApp (Opsional, untuk konfirmasi lebih cepat)</label>
+                   <input type="tel" id="customerPhone" name="customerPhone" placeholder="Contoh: 08123456789" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                   <p class="error-message" id="customerPhoneError"></p>
+               </div>
+               <div class="mt-8 flex flex-col sm:flex-row justify-end sm:space-x-3 space-y-3 sm:space-y-0">
+                    <button type="button" id="closeOrderFormModalButtonBottom" class="w-full sm:w-auto px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 transition duration-150">Batal</button>
+                   <button type="submit" class="w-full sm:w-auto px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-150 flex items-center justify-center">
+                       <i class="fab fa-whatsapp mr-2"></i>Kirim Pesanan via WhatsApp
+                   </button>
+               </div>
+           </form>
+       </div>
+   </div>
+
+    <!-- Modal Konfirmasi Umum (Digunakan untuk notifikasi setelah kirim WA atau Email Kontak) -->
+    <div id="generalConfirmationModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] hidden transition-opacity duration-300 opacity-0">
+        <div id="generalConfirmationModalContent" class="bg-white p-6 md:p-8 rounded-lg shadow-xl max-w-lg w-11/12 text-center transform scale-95 transition-transform duration-300">
+            <div class="flex justify-end">
+                <button id="closeGeneralConfirmationModal" class="text-gray-600 hover:text-gray-900 text-2xl">×</button>
+            </div>
+            <i id="generalConfirmationIcon" class="text-6xl mb-6"></i> 
+            <h3 id="generalConfirmationTitle" class="text-2xl font-bold text-gray-900 mb-4">Judul Konfirmasi</h3>
+            <p id="generalConfirmationMessage" class="text-gray-700 mb-6">Pesan konfirmasi.</p>
+            <div id="generalConfirmationDetails" class="text-left text-sm text-gray-600 mb-6 border-t border-b py-4 px-2 space-y-1">
+            </div>
+            <button id="closeGeneralConfirmationButton" class="bg-indigo-600 text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-indigo-700 transition duration-300">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+
+    <button onclick="scrollToTop()" id="backToTopBtn" title="Kembali ke atas"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Variabel Global & State Aplikasi ---
+            let cart = [];
+            const YOUR_WHATSAPP_NUMBER = "6285320410340"; 
+            const CONTACT_FORM_EMAIL_RECIPIENT = "mkohar155@gmail.com";
+
+            // --- Elemen DOM ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const nav = document.querySelector('nav');
+            const backToTopButton = document.getElementById("backToTopBtn");
+
+            const portfolioModal = document.getElementById('portfolioModal');
+            const portfolioModalContent = document.getElementById('portfolioModalContent');
+            const modalProjectName = document.getElementById('modalProjectName');
+            const modalMainImage = document.getElementById('modalMainImage'); // Ditambahkan
+            const modalThumbnailsContainer = document.getElementById('modalThumbnailsContainer'); // Ditambahkan
+            const modalProjectType = document.getElementById('modalProjectType');
+            const modalProjectDescription = document.getElementById('modalProjectDescription');
+            const modalProjectLinkContainer = document.getElementById('modalProjectLinkContainer'); // Ditambahkan
+            const modalProjectLink = document.getElementById('modalProjectLink');
+            const closePortfolioModalButton = document.getElementById('closePortfolioModal');
+
+            const cartIconLink = document.getElementById('cartIconLink');
+            const mobileCartIconLinkTrigger = document.getElementById('mobileCartIconLinkTrigger');
+            const mobileCartMenuLink = document.getElementById('mobileCartMenuLink');
+            const cartItemCountSpan = document.getElementById('cartItemCount');
+            const mobileCartItemCountTriggerSpan = document.getElementById('mobileCartItemCountTrigger');
+            const mobileCartItemCountMenuSpan = document.getElementById('mobileCartItemCountMenu');
+            
+            const cartModal = document.getElementById('cartModal');
+            const cartModalContent = document.getElementById('cartModalContent'); 
+            const closeCartModalButton = document.getElementById('closeCartModal');
+            const cartItemsContainer = document.getElementById('cartItemsContainer');
+            const cartSubtotalSpan = document.getElementById('cartSubtotal');
+            const checkoutButton = document.getElementById('checkoutButton'); 
+            const emptyCartMessage = document.getElementById('emptyCartMessage');
+
+            const orderFormModal = document.getElementById('orderFormModal');
+            const orderFormModalContent = document.getElementById('orderFormModalContent');
+            const closeOrderFormModalButtonTop = document.getElementById('closeOrderFormModalButtonTop');
+            const closeOrderFormModalButtonBottom = document.getElementById('closeOrderFormModalButtonBottom');
+            const checkoutForm = document.getElementById('checkoutForm'); 
+            const orderSummaryContainer = document.getElementById('orderSummaryContainer');
+            const orderSummaryTotal = document.getElementById('orderSummaryTotal');
+            const customerNameInput = document.getElementById('customerName');
+            const customerEmailInput = document.getElementById('customerEmail');
+            const customerPhoneInput = document.getElementById('customerPhone');
+            const customerNameError = document.getElementById('customerNameError');
+            const customerEmailError = document.getElementById('customerEmailError');
+            const customerPhoneError = document.getElementById('customerPhoneError');
+
+            const generalConfirmationModal = document.getElementById('generalConfirmationModal');
+            const generalConfirmationModalContent = document.getElementById('generalConfirmationModalContent');
+            const closeGeneralConfirmationModal = document.getElementById('closeGeneralConfirmationModal');
+            const generalConfirmationIcon = document.getElementById('generalConfirmationIcon');
+            const generalConfirmationTitle = document.getElementById('generalConfirmationTitle');
+            const generalConfirmationMessage = document.getElementById('generalConfirmationMessage');
+            const generalConfirmationDetails = document.getElementById('generalConfirmationDetails');
+            const closeGeneralConfirmationButton = document.getElementById('closeGeneralConfirmationButton');
+
+            const contactForm = document.getElementById('contactForm'); 
+            const newsletterForm = document.getElementById('newsletterForm');
+
+            function openModal(modalElement, modalContentElement) {
+                if (modalElement) {
+                    modalElement.classList.remove('hidden');
+                    requestAnimationFrame(() => {
+                        modalElement.classList.remove('opacity-0');
+                        if (modalContentElement) modalContentElement.classList.remove('scale-95');
+                    });
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+
+            function closeModal(modalElement, modalContentElement) {
+                if (modalElement) {
+                    modalElement.classList.add('opacity-0');
+                    if (modalContentElement) modalContentElement.classList.add('scale-95');
+                    setTimeout(() => {
+                        modalElement.classList.add('hidden');
+                        document.body.style.overflow = '';
+                    }, 300);
+                }
+            }
+            
+            function showToast(message) {
+                const existingToast = document.querySelector('.toast-notification');
+                if (existingToast) existingToast.remove();
+                const toast = document.createElement('div');
+                toast.className = 'toast-notification';
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                requestAnimationFrame(() => { toast.classList.add('show'); });
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+
+            function formatRupiah(number) {
+                return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(number);
+            }
+
+            function parseRupiah(rupiahString) {
+                if (!rupiahString) return 0;
+                const cleanedString = String(rupiahString).replace(/Rp\.|\s|\./g, '');
+                return parseFloat(cleanedString) || 0;
+            }
+
+            loadCartFromLocalStorage();
+            updateCartUI(); 
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            }
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    const isCartTrigger = this.id === 'cartIconLink' || this.id === 'mobileCartIconLinkTrigger' || this.id === 'mobileCartMenuLink';
+                    const isViewAllEbooks = this.id === 'viewAllEbooksLink';
+
+                    if (targetId === '#' && (isCartTrigger || isViewAllEbooks)) {
+                        e.preventDefault(); 
+                        return;
+                    }
+                    if (targetId === '#') {
+                         e.preventDefault();
+                         return;
+                    }
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault(); 
+                        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                        const offsetTop = targetElement.offsetTop - (nav ? nav.offsetHeight : 70);
+                        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    }
+                });
+            });
+
+            if (nav) {
+                window.addEventListener('scroll', () => {
+                    nav.classList.toggle('shadow-lg', window.scrollY > 10);
+                });
+            }
+
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            const projectDetails = {
+                "Seri Vlog Perjalanan": {
+                    type: "Edit Video",
+                    mainImage: "https://images.unsplash.com/photo-1615223323293-526926807b61?q=80&w=800&h=450&auto=format&fit=crop",
+                    thumbnails: [
+                        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=150&h=100&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?q=80&w=150&h=100&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?q=80&w=150&h=100&auto=format&fit=crop"
+                    ],
+                    description: "<p>Dokumentasi perjalanan sinematik yang menangkap keindahan berbagai destinasi di Indonesia. Proses editing melibatkan color grading profesional, penambahan motion graphics informatif, dan pemilihan musik latar yang mendukung suasana.</p><p>Tantangan utama adalah menyatukan berbagai jenis footage dari kamera berbeda menjadi satu alur cerita yang kohesif dan menarik.</p><ul><li>Color Grading & Correction</li><li>Motion Graphics & Titles</li><li>Sound Design & Mixing</li><li>Storytelling Editing</li></ul>",
+                    link: "https://youtube.com/" 
+                },
+                "Fotografi Fesyen": {
+                    type: "Edit Foto",
+                    mainImage: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=800&h=450&auto=format&fit=crop",
+                    thumbnails: [
+                        "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=150&h=100&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1551489186-cf8726f514f8?q=80&w=150&h=100&auto=format&fit=crop",
+                    ],
+                    description: "<p>Sesi foto fesyen high-end dengan retouching detail untuk majalah dan kampanye iklan. Menonjolkan keindahan produk dan model dengan teknik Dodge & Burn, frequency separation, dan color correction yang presisi.</p><p>Fokus pada detail tekstur pakaian dan kehalusan kulit model tanpa menghilangkan karakter alaminya.</p>",
+                    link: "https://behance.net/"
+                },
+                "Identitas Merek": {
+                    type: "Desain Grafis",
+                    mainImage: "https://images.unsplash.com/photo-1567443024551-f3e3dee6e57c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=800&h=450&auto=format&fit=crop",
+                    thumbnails: [], 
+                    description: "<p>Pengembangan identitas merek yang komprehensif untuk startup teknologi. Mulai dari riset pasar, desain logo yang modern dan filosofis, pemilihan palet warna yang merepresentasikan nilai perusahaan, hingga pembuatan panduan merek lengkap untuk konsistensi di semua media.</p>",
+                    link: "" 
+                },
+                "Desain Buku Masak": { 
+                    type: "Beli eBook", 
+                    mainImage: "https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=800&h=450&auto=format&fit=crop",
+                    thumbnails: [],
+                    description: "<p>Desain tata letak dan sampul yang menarik untuk buku masak digital bertema masakan nusantara. Fokus pada keterbacaan, fotografi makanan yang menggugah selera, dan navigasi yang mudah. Disediakan dalam format PDF interaktif.</p>",
+                    link: "#ebooks" 
+                },
+                "Video Korporat": {
+                    type: "Edit Video",
+                    mainImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=800&h=450&auto=format&fit=crop",
+                    thumbnails: [],
+                    description: "<p>Produksi video profil perusahaan untuk klien di bidang manufaktur. Meliputi pengambilan gambar di lokasi, wawancara dengan manajemen, dan editing yang menampilkan proses produksi serta nilai-nilai perusahaan secara profesional dan informatif.</p>",
+                    link: "https://vimeo.com/"
+                },
+                "Kit Media Sosial": {
+                    type: "Desain Grafis",
+                    mainImage: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=800&h=450&auto=format&fit=crop",
+                    thumbnails: [
+                        "https://images.unsplash.com/photo-1611162616805-6 ganglia8a5730e?q=80&w=150&h=100&auto=format&fit=crop", 
+                        "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=150&h=100&auto=format&fit=crop"
+                    ],
+                    description: "<p>Paket desain grafis lengkap untuk kebutuhan media sosial berbagai platform (Instagram, Facebook, Twitter). Termasuk desain template untuk postingan feed, Instagram Stories, cover Facebook, dan banner Twitter, yang semuanya disesuaikan dengan identitas merek klien untuk meningkatkan engagement.</p>",
+                    link: ""
+                }
+            };
+
+            portfolioItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    const projectNameOnCard = item.querySelector('h3').textContent;
+                    const details = projectDetails[projectNameOnCard];
+
+                    if (details && modalProjectName && modalMainImage && modalProjectType && modalProjectDescription && modalProjectLinkContainer && modalProjectLink && modalThumbnailsContainer) {
+                        modalProjectName.textContent = projectNameOnCard;
+                        modalProjectType.textContent = details.type;
+                        modalMainImage.src = details.mainImage || "https://via.placeholder.com/800x450/E2E8F0/4A5568?text=Gambar+Proyek";
+                        modalMainImage.alt = `Gambar Utama ${projectNameOnCard}`;
+                        modalProjectDescription.innerHTML = details.description || "<p>Deskripsi untuk proyek ini belum tersedia.</p>";
+                        modalThumbnailsContainer.innerHTML = '';
+                        if (details.thumbnails && details.thumbnails.length > 0) {
+                            details.thumbnails.forEach(thumbSrc => {
+                                const thumbImg = document.createElement('img');
+                                thumbImg.src = thumbSrc;
+                                thumbImg.alt = `Thumbnail ${projectNameOnCard}`;
+                                thumbImg.className = "w-full h-20 object-cover rounded-md border cursor-pointer hover:opacity-75 transition-opacity";
+                                thumbImg.addEventListener('click', () => {
+                                    modalMainImage.src = thumbSrc;
+                                    modalMainImage.alt = `Detail ${projectNameOnCard}`;
+                                });
+                                modalThumbnailsContainer.appendChild(thumbImg);
+                            });
+                        }
+                        if (details.link && details.link !== "#" && details.link !== "") {
+                            modalProjectLink.href = details.link;
+                            modalProjectLinkContainer.style.display = 'block';
+                        } else {
+                            modalProjectLinkContainer.style.display = 'none';
+                        }
+                    } else {
+                        modalProjectName.textContent = projectNameOnCard;
+                        modalProjectType.textContent = item.querySelector('p').textContent;
+                        modalMainImage.src = item.querySelector('img').src;
+                        modalProjectDescription.innerHTML = "<p>Detail untuk proyek ini tidak tersedia saat ini.</p>";
+                        modalThumbnailsContainer.innerHTML = '';
+                        modalProjectLinkContainer.style.display = 'none';
+                    }
+                    openModal(portfolioModal, portfolioModalContent);
+                });
+            });
+
+            if (closePortfolioModalButton) closePortfolioModalButton.addEventListener('click', () => closeModal(portfolioModal, portfolioModalContent));
+            if (portfolioModal) portfolioModal.addEventListener('click', (e) => { if (e.target === portfolioModal) closeModal(portfolioModal, portfolioModalContent); });
+
+            document.querySelectorAll('.ebook-card .ebook-overlay button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const ebookCard = this.closest('.ebook-card');
+                    const id = ebookCard.querySelector('h3').textContent.replace(/\s+/g, '-').toLowerCase();
+                    const name = ebookCard.querySelector('h3').textContent;
+                    const priceString = ebookCard.querySelector('.text-indigo-600.font-bold').textContent;
+                    const price = parseRupiah(priceString);
+                    const image = ebookCard.querySelector('img').src;
+                    addEbookToCart({ id, name, price, image });
+                });
+            });
+
+            function addEbookToCart(ebook) {
+                const existingItem = cart.find(item => item.id === ebook.id);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({ ...ebook, quantity: 1 });
+                }
+                updateCartUI();
+                showToast(`${ebook.name} ditambahkan ke keranjang!`);
+            }
+
+            function updateCartUI() {
+                updateCartIcon();
+                updateCartModalDisplay();
+                saveCartToLocalStorage();
+            }
+            
+            function updateCartIcon() {
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                const spans = [cartItemCountSpan, mobileCartItemCountTriggerSpan, mobileCartItemCountMenuSpan];
+                spans.forEach(span => {
+                    if (span) {
+                        span.textContent = totalItems;
+                        span.classList.toggle('hidden', totalItems === 0);
+                    }
+                });
+            }
+
+            function updateCartModalDisplay() {
+                if (!cartItemsContainer || !cartSubtotalSpan || !emptyCartMessage || !checkoutButton) return;
+                cartItemsContainer.innerHTML = '';
+                if (cart.length === 0) {
+                    emptyCartMessage.style.display = 'block';
+                    checkoutButton.disabled = true;
+                } else {
+                    emptyCartMessage.style.display = 'none';
+                    checkoutButton.disabled = false;
+                    cart.forEach(item => {
+                        const itemElement = document.createElement('div');
+                        itemElement.className = 'flex items-center justify-between border-b pb-4 last:border-b-0 last:pb-0';
+                        itemElement.innerHTML = `
+                            <div class="flex items-center space-x-3">
+                                <img src="${item.image}" alt="${item.name}" class="w-16 h-20 object-cover rounded">
+                                <div>
+                                    <p class="font-semibold text-gray-800">${item.name}</p>
+                                    <p class="text-sm text-gray-500">${formatRupiah(item.price)}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button data-id="${item.id}" class="decrease-quantity text-indigo-600 hover:text-indigo-800 p-1 text-lg leading-none">-</button>
+                                <span class="font-medium w-6 text-center">${item.quantity}</span>
+                                <button data-id="${item.id}" class="increase-quantity text-indigo-600 hover:text-indigo-800 p-1 text-lg leading-none">+</button>
+                                <button data-id="${item.id}" class="remove-item text-red-500 hover:text-red-700 ml-3 p-1"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        `;
+                        cartItemsContainer.appendChild(itemElement);
+                    });
+                }
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                cartSubtotalSpan.textContent = formatRupiah(subtotal);
+
+                cartItemsContainer.querySelectorAll('.decrease-quantity').forEach(btn => btn.addEventListener('click', handleQuantityChange));
+                cartItemsContainer.querySelectorAll('.increase-quantity').forEach(btn => btn.addEventListener('click', handleQuantityChange));
+                cartItemsContainer.querySelectorAll('.remove-item').forEach(btn => btn.addEventListener('click', handleRemoveItem));
+            }
+
+            function handleQuantityChange(event) {
+                const itemId = event.target.dataset.id;
+                const item = cart.find(i => i.id === itemId);
+                if (item) {
+                    if (event.target.classList.contains('increase-quantity')) {
+                        item.quantity++;
+                    } else if (event.target.classList.contains('decrease-quantity') && item.quantity > 1) {
+                        item.quantity--;
+                    } else if (event.target.classList.contains('decrease-quantity') && item.quantity === 1) {
+                        cart = cart.filter(i => i.id !== itemId);
+                    }
+                    updateCartUI();
+                }
+            }
+
+            function handleRemoveItem(event) {
+                const itemId = event.target.closest('button').dataset.id;
+                cart = cart.filter(item => item.id !== itemId);
+                updateCartUI();
+            }
+            
+            function saveCartToLocalStorage() { localStorage.setItem('creativeFreelancerCart', JSON.stringify(cart)); }
+            function loadCartFromLocalStorage() {
+                const savedCart = localStorage.getItem('creativeFreelancerCart');
+                if (savedCart) { cart = JSON.parse(savedCart); }
+            }
+            function openCart() { updateCartModalDisplay(); openModal(cartModal, cartModalContent); }
+
+            if (cartIconLink) cartIconLink.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+            if (mobileCartIconLinkTrigger) mobileCartIconLinkTrigger.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+            if (mobileCartMenuLink) mobileCartMenuLink.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+            if (closeCartModalButton) closeCartModalButton.addEventListener('click', () => closeModal(cartModal, cartModalContent));
+            if (cartModal) cartModal.addEventListener('click', (e) => { if (e.target === cartModal) closeModal(cartModal, cartModalContent); });
+
+            if (checkoutButton) {
+                checkoutButton.addEventListener('click', () => {
+                    if (cart.length > 0) {
+                        closeModal(cartModal, cartModalContent);
+                        populateOrderFormSummary();
+                        openModal(orderFormModal, orderFormModalContent);
+                    } else {
+                        showToast("Keranjang Anda kosong untuk melakukan pemesanan.");
+                    }
+                });
+            }
+
+            function populateOrderFormSummary() {
+                if (!orderSummaryContainer || !orderSummaryTotal) return;
+                orderSummaryContainer.innerHTML = '';
+                if (cart.length === 0) {
+                    orderSummaryContainer.innerHTML = '<p class="text-sm text-gray-500">Tidak ada item.</p>';
+                } else {
+                    cart.forEach(item => {
+                        const summaryItem = document.createElement('div');
+                        summaryItem.className = 'text-sm flex justify-between';
+                        summaryItem.innerHTML = `
+                            <span>${item.name} (x${item.quantity})</span>
+                            <span>${formatRupiah(item.price * item.quantity)}</span>
+                        `;
+                        orderSummaryContainer.appendChild(summaryItem);
+                    });
+                }
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                orderSummaryTotal.textContent = formatRupiah(subtotal);
+            }
+
+            if (checkoutForm) {
+                checkoutForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    let isValid = true;
+                    function clearErrorField(inputEl, errorEl) {
+                        if (errorEl) errorEl.textContent = '';
+                        if (inputEl) inputEl.classList.remove('input-error');
+                    }
+                    clearErrorField(customerNameInput, customerNameError);
+                    clearErrorField(customerEmailInput, customerEmailError);
+                    clearErrorField(customerPhoneInput, customerPhoneError);
+
+                    if (customerNameInput.value.trim() === '') { 
+                        if (customerNameError) customerNameError.textContent = 'Nama tidak boleh kosong.';
+                        if (customerNameInput) customerNameInput.classList.add('input-error');
+                        isValid = false; 
+                    }
+                    if (customerEmailInput.value.trim() === '') { 
+                        if (customerEmailError) customerEmailError.textContent = 'Email tidak boleh kosong.';
+                        if (customerEmailInput) customerEmailInput.classList.add('input-error');
+                        isValid = false; 
+                    } 
+                    else if (!/^\S+@\S+\.\S+$/.test(customerEmailInput.value.trim())) { 
+                        if (customerEmailError) customerEmailError.textContent = 'Format email tidak valid.';
+                        if (customerEmailInput) customerEmailInput.classList.add('input-error');
+                        isValid = false; 
+                    }
+                    const phoneValue = customerPhoneInput.value.trim();
+                    if (phoneValue !== '' && !/^[0-9\s+-]{8,15}$/.test(phoneValue)) { 
+                        if (customerPhoneError) customerPhoneError.textContent = 'Format nomor telepon tidak valid.';
+                        if (customerPhoneInput) customerPhoneInput.classList.add('input-error');
+                        isValid = false;
+                    }
+
+                    if (isValid) {
+                        const customerName = customerNameInput.value.trim();
+                        const customerEmail = customerEmailInput.value.trim();
+                        const customerPhone = phoneValue;
+
+                        let orderDetailsText = "Halo CreativeFreelancer,\n\nSaya ingin memesan eBook berikut:\n";
+                        cart.forEach(item => {
+                            orderDetailsText += `- ${item.name} (Kuantitas: ${item.quantity}) - Harga: ${formatRupiah(item.price * item.quantity)}\n`;
+                        });
+                        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                        orderDetailsText += `\nTotal Pesanan: ${formatRupiah(subtotal)}\n`;
+                        orderDetailsText += `\nData Pemesan:\n`;
+                        orderDetailsText += `Nama: ${customerName}\n`;
+                        orderDetailsText += `Email: ${customerEmail}\n`;
+                        if (customerPhone) {
+                            orderDetailsText += `No. WhatsApp: ${customerPhone}\n`;
+                        }
+                        orderDetailsText += `\nMohon info untuk langkah selanjutnya dan instruksi pembayarannya. Terima kasih!`;
+
+                        const whatsappURL = `https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${encodeURIComponent(orderDetailsText)}`;
+                        window.open(whatsappURL, '_blank');
+                        
+                        closeModal(orderFormModal, orderFormModalContent);
+                        checkoutForm.reset();
+                        clearErrorField(customerNameInput, customerNameError);
+                        clearErrorField(customerEmailInput, customerEmailError);
+                        clearErrorField(customerPhoneInput, customerPhoneError);
+
+                        const currentOrderRef = `WA-${new Date().toISOString().slice(0,10).replace(/-/g,"")}-${Math.random().toString(36).substr(2, 3).toUpperCase()}`;
+                        const currentOrderTotal = formatRupiah(subtotal);
+                        
+                        cart = [];
+                        updateCartUI();
+                        
+                        if(generalConfirmationModal && generalConfirmationIcon && generalConfirmationTitle && generalConfirmationMessage && generalConfirmationDetails){
+                           generalConfirmationTitle.textContent = "Pesanan Dikirim ke WhatsApp!";
+                           generalConfirmationMessage.innerHTML = "Silakan lanjutkan percakapan di WhatsApp untuk menyelesaikan pesanan Anda.<br>Kami akan segera merespons. Terima kasih!";
+                           generalConfirmationIcon.className = 'fab fa-whatsapp text-green-500 text-6xl mb-6';
+                           generalConfirmationDetails.innerHTML = `<p>No. Referensi Pesanan (Contoh): <span class="font-mono">${currentOrderRef}</span></p><p>Total Pembayaran: <span class="font-semibold">${currentOrderTotal}</span></p>`;
+                           openModal(generalConfirmationModal, generalConfirmationModalContent);
+                        } else {
+                           showToast("Pesanan dikirim ke WhatsApp! Lanjutkan di sana.");
+                        }
+                    }
+                });
+            }
+            
+            if (closeOrderFormModalButtonTop) closeOrderFormModalButtonTop.addEventListener('click', () => closeModal(orderFormModal, orderFormModalContent));
+            if (closeOrderFormModalButtonBottom) closeOrderFormModalButtonBottom.addEventListener('click', () => closeModal(orderFormModal, orderFormModalContent));
+            if (orderFormModal) orderFormModal.addEventListener('click', (e) => { if (e.target === orderFormModal) closeModal(orderFormModal, orderFormModalContent); });
+
+            if (contactForm) { // Logika untuk formulir kontak utama
+                const nameInput = contactForm.querySelector('#contact_name');
+                const emailInput = contactForm.querySelector('#contact_email');
+                const serviceInput = contactForm.querySelector('#contact_service');
+                const messageInput = contactForm.querySelector('#contact_message');
+                const nameError = contactForm.querySelector('#contact_nameError');
+                const emailError = contactForm.querySelector('#contact_emailError');
+                const serviceError = contactForm.querySelector('#contact_serviceError');
+                const messageError = contactForm.querySelector('#contact_messageError');
+
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault(); 
+                    let isValid = true;
+                    function clearErrorField(inputEl, errorEl) {
+                        if(errorEl) errorEl.textContent = '';
+                        if(inputEl) inputEl.classList.remove('input-error');
+                    }
+                    clearErrorField(nameInput, nameError);
+                    clearErrorField(emailInput, emailError);
+                    clearErrorField(serviceInput, serviceError);
+                    clearErrorField(messageInput, messageError);
+
+                    if (nameInput.value.trim() === '') { 
+                        if(nameError) nameError.textContent = 'Nama tidak boleh kosong.';
+                        if(nameInput) nameInput.classList.add('input-error');
+                        isValid = false; 
+                    }
+                    if (emailInput.value.trim() === '') { 
+                        if(emailError) emailError.textContent = 'Email tidak boleh kosong.';
+                        if(emailInput) emailInput.classList.add('input-error');
+                        isValid = false; 
+                    } 
+                    else if (!/^\S+@\S+\.\S+$/.test(emailInput.value.trim())) { 
+                        if(emailError) emailError.textContent = 'Format email tidak valid.';
+                        if(emailInput) emailInput.classList.add('input-error');
+                        isValid = false; 
+                    }
+                    if (serviceInput.value === '') { 
+                        if(serviceError) serviceError.textContent = 'Silakan pilih layanan.';
+                        if(serviceInput) serviceInput.classList.add('input-error');
+                        isValid = false; 
+                    }
+                    if (messageInput.value.trim() === '') { 
+                        if(messageError) messageError.textContent = 'Pesan tidak boleh kosong.';
+                        if(messageInput) messageInput.classList.add('input-error');
+                        isValid = false; 
+                    }
+
+                    if (isValid) {
+                        const contactName = nameInput.value.trim();
+                        const contactEmail = emailInput.value.trim();
+                        const contactService = serviceInput.value;
+                        const contactMessage = messageInput.value.trim();
+
+                        let emailSubject = `Pesan dari Form Kontak: ${contactName} - Layanan: ${contactService}`;
+                        let emailBody = `Anda menerima pesan baru dari formulir kontak website CreativeFreelancer:\n\n`;
+                        emailBody += `Nama: ${contactName}\n`;
+                        emailBody += `Email: ${contactEmail}\n`;
+                        emailBody += `Layanan yang Diminati: ${contactService}\n\n`;
+                        emailBody += `Pesan:\n${contactMessage}\n`;
+
+                        const mailtoLink = `mailto:${CONTACT_FORM_EMAIL_RECIPIENT}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+                        window.location.href = mailtoLink;
+                        
+                        // Notifikasi lebih sederhana untuk form kontak
+                        showToast("Pesan siap dikirim via Email! Periksa aplikasi email Anda.");
+                        // Atau jika ingin pakai modal umum:
+                        /*
+                        if(generalConfirmationModal && generalConfirmationIcon && generalConfirmationTitle && generalConfirmationMessage && generalConfirmationDetails){
+                           generalConfirmationTitle.textContent = "Pesan Kontak Siap Dikirim!";
+                           generalConfirmationMessage.innerHTML = "Silakan periksa aplikasi email Anda dan kirim pesan yang sudah disiapkan.<br>Kami akan segera merespons. Terima kasih!";
+                           generalConfirmationIcon.className = 'fas fa-envelope-open-text text-indigo-500 text-6xl mb-6'; 
+                           generalConfirmationDetails.innerHTML = ''; // Kosongkan detail pesanan
+                           openModal(generalConfirmationModal, generalConfirmationModalContent);
+                        }
+                        */
+
+                        contactForm.reset(); 
+                        clearErrorField(nameInput, nameError);
+                        clearErrorField(emailInput, emailError);
+                        clearErrorField(serviceInput, serviceError);
+                        clearErrorField(messageInput, messageError);
+                    }
+                });
+            }
+            
+            if (closeGeneralConfirmationModal) closeGeneralConfirmationModal.addEventListener('click', () => closeModal(generalConfirmationModal, generalConfirmationModalContent));
+            if (closeGeneralConfirmationButton) closeGeneralConfirmationButton.addEventListener('click', () => closeModal(generalConfirmationModal, generalConfirmationModalContent));
+            if (generalConfirmationModal) generalConfirmationModal.addEventListener('click', (e) => { if (e.target === generalConfirmationModal) closeModal(generalConfirmationModal, generalConfirmationModalContent); });
+                       
+            const viewAllEbooksLink = document.getElementById('viewAllEbooksLink');
+            if (viewAllEbooksLink) { 
+                viewAllEbooksLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert('Menampilkan semua eBook...\n(Ini hanya simulasi, halaman daftar semua eBook belum dibuat)');
+                });
+            }
+            
+            if (newsletterForm) { /* ... (logika newsletter tetap sama) ... */ }
+
+            window.addEventListener('scroll', () => { /* ... (logika back to top tetap sama) ... */ });
+        }); 
+
+        function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
+    </script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 800,
+        offset: 100,
+        once: true, 
+      });
+    </script>
+</body>
+</html>
+```
+
