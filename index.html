@@ -112,9 +112,8 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* Styling untuk Tailwind Prose di dalam modal agar tidak terlalu lebar */
         #portfolioModalContent .prose {
-            max-width: 100%; /* Override max-width default dari prose */
+            max-width: 100%; 
         }
     </style>
 </head>
@@ -134,6 +133,7 @@
                     <a href="#services" class="nav-link text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">Layanan</a>
                     <a href="#portfolio" class="nav-link text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">Portofolio</a>
                     <a href="#ebooks" class="nav-link text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">eBook</a>
+                    <a href="#ai-tools" class="nav-link text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">Tools AI</a>
                     <a href="#contact" class="nav-link text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">Kontak</a>
                     <a href="#contact" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition duration-300">Dapatkan Penawaran</a>
                     <a href="#" id="cartIconLink" class="relative text-gray-500 hover:text-gray-900 px-3 py-2">
@@ -160,6 +160,7 @@
                 <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">Layanan</a>
                 <a href="#portfolio" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">Portofolio</a>
                 <a href="#ebooks" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">eBook</a>
+                <a href="#ai-tools" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">Tools AI</a>
                 <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">Kontak</a>
                 <a href="#" id="mobileCartMenuLink" class="flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">
                     <span>Keranjang Saya</span>
@@ -401,121 +402,6 @@
         </div>
     </section>
 
-    <!-- Kumpulan Tools AI Section -->
-    <section id="ai-tools" class="py-20 bg-white"> <!-- Atau bg-gray-50 sesuai tema Anda -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl" data-aos="fade-down">
-                    Kumpulan Tools AI Pilihan
-                </h2>
-                <p class="mt-4 max-w-2xl text-xl text-gray-600 mx-auto" data-aos="fade-up" data-aos-delay="100">
-                    Jelajahi berbagai alat kecerdasan buatan yang dapat membantu meningkatkan kreativitas dan produktivitas Anda.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                <!-- Tool Card 1: Contoh dengan Font Awesome -->
-                <a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mr-4 group-hover:bg-indigo-200 transition-colors">
-                            <i class="fas fa-brain text-indigo-600 text-2xl"></i> <!-- Ganti ikon Font Awesome -->
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-indigo-700">ChatGPT</h3>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-3">Model bahasa AI untuk generasi teks, penjawaban pertanyaan, dan banyak lagi.</p>
-                    <span class="text-xs text-indigo-500 font-semibold group-hover:text-indigo-600">Kategori: Teks & Penulisan</span>
-                </a>
-
-                <!-- Tool Card 2: Contoh dengan Gambar Ikon (SVG/PNG) -->
-                <a href="https://www.midjourney.com/" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up" data-aos-delay="50">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mr-4 group-hover:bg-teal-200 transition-colors p-1">
-                            <!-- Ganti dengan path ke ikon Anda. Pastikan ukurannya sesuai. -->
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Midjourney_Emblem.png/480px-Midjourney_Emblem.png" alt="Midjourney Icon" class="w-10 h-10 object-contain">
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-teal-700">Midjourney</h3>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-3">Platform AI untuk menghasilkan gambar artistik dari deskripsi teks.</p>
-                    <span class="text-xs text-teal-500 font-semibold group-hover:text-teal-600">Kategori: Gambar & Desain</span>
-                </a>
-
-                <!-- Tool Card 3: Contoh Lain -->
-                <a href="https://runwayml.com/" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up" data-aos-delay="100">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4 group-hover:bg-purple-200 transition-colors">
-                            <i class="fas fa-video-slash text-purple-600 text-2xl"></i> <!-- Ganti ikon -->
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-purple-700">RunwayML</h3>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-3">Suite alat AI untuk pembuatan dan pengeditan video generasi berikutnya.</p>
-                    <span class="text-xs text-purple-500 font-semibold group-hover:text-purple-600">Kategori: Video</span>
-                </a>
-                
-                <!-- Tool Card 4: Contoh Lain -->
-                <a href="https://firefly.adobe.com/" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up" data-aos-delay="150">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4 group-hover:bg-red-200 transition-colors p-1">
-                             <!-- Ganti dengan path ke ikon Adobe Firefly jika ada, atau ikon FA generik -->
-                            <i class="fas fa-fire text-red-600 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-red-700">Adobe Firefly</h3>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-3">Model AI generatif dari Adobe untuk membuat gambar dan efek teks.</p>
-                    <span class="text-xs text-red-500 font-semibold group-hover:text-red-600">Kategori: Gambar & Desain</span>
-                </a>
-
-                <!-- Tambahkan lebih banyak Tool Card di sini sesuai kebutuhan -->
-                <!-- Contoh Tool Card 5 -->
-                <a href="https://www.canva.com/ai-image-generator/" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up" data-aos-delay="200">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4 group-hover:bg-blue-200 transition-colors p-1">
-                            <i class="fas fa-magic text-blue-600 text-2xl"></i> <!-- Ikon generik untuk Canva Magic -->
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-700">Canva Magic Studio</h3>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-3">Berbagai fitur AI di dalam Canva untuk desain, tulisan, dan lainnya.</p>
-                    <span class="text-xs text-blue-500 font-semibold group-hover:text-blue-600">Kategori: Desain & Produktivitas</span>
-                </a>
-
-                 <!-- Contoh Tool Card 6 -->
-                <a href="https:// descript.com/" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up" data-aos-delay="250">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4 group-hover:bg-green-200 transition-colors">
-                             <i class="fas fa-file-audio text-green-600 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-green-700">Descript</h3>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-3">Editor audio dan video all-in-one dengan transkripsi AI yang kuat.</p>
-                    <span class="text-xs text-green-500 font-semibold group-hover:text-green-600">Kategori: Audio & Video</span>
-                </a>
-                 <!-- Contoh Tool Card 7 -->
-                <a href="https://elevenlabs.io/" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up" data-aos-delay="300">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-4 group-hover:bg-yellow-200 transition-colors">
-                             <i class="fas fa-microphone-alt text-yellow-600 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-yellow-700">ElevenLabs</h3>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-3">AI untuk text-to-speech dan voice cloning dengan suara yang sangat natural.</p>
-                    <span class="text-xs text-yellow-500 font-semibold group-hover:text-yellow-600">Kategori: Audio & Suara</span>
-                </a>
-                 <!-- Contoh Tool Card 8 -->
-                <a href="https://notion.so/ai" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up" data-aos-delay="350">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mr-4 group-hover:bg-gray-300 transition-colors p-1">
-                            <!-- Anda bisa mencari ikon SVG Notion atau menggunakan ikon generik -->
-                             <i class="fas fa-lightbulb text-gray-700 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-gray-800">Notion AI</h3>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-3">Fitur AI terintegrasi di Notion untuk membantu menulis, merangkum, dan brainstorming.</p>
-                    <span class="text-xs text-gray-600 font-semibold group-hover:text-gray-700">Kategori: Produktivitas & Teks</span>
-                </a>
-
-            </div>
-        </div>
-    </section>
-
     <!-- Bagian Toko eBook -->
     <section id="ebooks" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -528,7 +414,7 @@
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div class="ebook-card bg-white rounded-lg shadow-md overflow-hidden relative" data-aos="flip-left" data-aos-delay="50">
                     <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="eBook Edit Video" class="w-full h-48 object-cover">
                     <div class="p-6">
@@ -556,12 +442,124 @@
                     </div>
                     <div class="ebook-overlay absolute inset-0 bg-indigo-600/90 flex items-center justify-center"><button class="bg-white text-indigo-600 px-6 py-2 rounded-md font-semibold hover:bg-gray-100 transition duration-300">Tambah ke Keranjang</button></div>
                 </div>
+                <div class="ebook-card bg-white rounded-lg shadow-md overflow-hidden relative" data-aos="flip-left" data-aos-delay="350">
+                    <img src="https://images.unsplash.com/photo-1677756119517-756a188d2d94?q=80&w=800&h=450&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="eBook Tutorial AI Generator" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Tutorial Membuat Tools AI Generator</h3>
+                        <p class="text-gray-600 mb-4">Panduan langkah demi langkah membangun alat generator AI sederhana menggunakan Python dan API publik.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-indigo-600 font-bold">Rp.120.000</span> 
+                            <div class="text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ebook-overlay absolute inset-0 bg-indigo-600/90 flex items-center justify-center">
+                        <button class="bg-white text-indigo-600 px-6 py-2 rounded-md font-semibold hover:bg-gray-100 transition duration-300">Tambah ke Keranjang</button>
+                    </div>
+                </div>
             </div>
             
             <div class="mt-16 text-center" data-aos="fade-up">
                 <a href="#" id="viewAllEbooksLink" class="bg-indigo-600 text-white px-8 py-4 rounded-md text-lg font-semibold hover:bg-indigo-700 transition duration-300 inline-flex items-center">
                     Lihat Semua eBook
                     <i class="fas fa-book-open ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Kumpulan Tools AI Section -->
+    <section id="ai-tools" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl" data-aos="fade-down">
+                    Kumpulan Tools AI Pilihan
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-600 mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Jelajahi berbagai alat kecerdasan buatan yang dapat membantu meningkatkan kreativitas dan produktivitas Anda.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mr-4 group-hover:bg-indigo-200 transition-colors">
+                            <i class="fas fa-brain text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-indigo-700">ChatGPT</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">Model bahasa AI untuk generasi teks, penjawaban pertanyaan, dan banyak lagi.</p>
+                    <span class="text-xs text-indigo-500 font-semibold group-hover:text-indigo-600">Kategori: Teks & Penulisan</span>
+                </a>
+                <a href="https://www.midjourney.com/" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up" data-aos-delay="50">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mr-4 group-hover:bg-teal-200 transition-colors p-1">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Midjourney_Emblem.png/480px-Midjourney_Emblem.png" alt="Midjourney Icon" class="w-10 h-10 object-contain">
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-teal-700">Midjourney</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">Platform AI untuk menghasilkan gambar artistik dari deskripsi teks.</p>
+                    <span class="text-xs text-teal-500 font-semibold group-hover:text-teal-600">Kategori: Gambar & Desain</span>
+                </a>
+                <a href="https://runwayml.com/" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up" data-aos-delay="100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4 group-hover:bg-purple-200 transition-colors">
+                            <i class="fas fa-video-slash text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-purple-700">RunwayML</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">Suite alat AI untuk pembuatan dan pengeditan video generasi berikutnya.</p>
+                    <span class="text-xs text-purple-500 font-semibold group-hover:text-purple-600">Kategori: Video</span>
+                </a>
+                <a href="https://firefly.adobe.com/" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up" data-aos-delay="150">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4 group-hover:bg-red-200 transition-colors p-1">
+                            <i class="fas fa-fire text-red-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-red-700">Adobe Firefly</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">Model AI generatif dari Adobe untuk membuat gambar dan efek teks.</p>
+                    <span class="text-xs text-red-500 font-semibold group-hover:text-red-600">Kategori: Gambar & Desain</span>
+                </a>
+                <a href="https://www.canva.com/ai-image-generator/" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up" data-aos-delay="200">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4 group-hover:bg-blue-200 transition-colors p-1">
+                            <i class="fas fa-magic text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-700">Canva Magic Studio</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">Berbagai fitur AI di dalam Canva untuk desain, tulisan, dan lainnya.</p>
+                    <span class="text-xs text-blue-500 font-semibold group-hover:text-blue-600">Kategori: Desain & Produktivitas</span>
+                </a>
+                <a href="https://descript.com/" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up" data-aos-delay="250">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4 group-hover:bg-green-200 transition-colors">
+                             <i class="fas fa-file-audio text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-green-700">Descript</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">Editor audio dan video all-in-one dengan transkripsi AI yang kuat.</p>
+                    <span class="text-xs text-green-500 font-semibold group-hover:text-green-600">Kategori: Audio & Video</span>
+                </a>
+                <a href="https://elevenlabs.io/" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up" data-aos-delay="300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-4 group-hover:bg-yellow-200 transition-colors">
+                             <i class="fas fa-microphone-alt text-yellow-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-yellow-700">ElevenLabs</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">AI untuk text-to-speech dan voice cloning dengan suara yang sangat natural.</p>
+                    <span class="text-xs text-yellow-500 font-semibold group-hover:text-yellow-600">Kategori: Audio & Suara</span>
+                </a>
+                <a href="https://notion.so/ai" target="_blank" rel="noopener noreferrer" class="ai-tool-card group block bg-gray-50 hover:bg-indigo-50 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl" data-aos="zoom-in-up" data-aos-delay="350">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mr-4 group-hover:bg-gray-300 transition-colors p-1">
+                             <i class="fas fa-lightbulb text-gray-700 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-gray-800">Notion AI</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">Fitur AI terintegrasi di Notion untuk membantu menulis, merangkum, dan brainstorming.</p>
+                    <span class="text-xs text-gray-600 font-semibold group-hover:text-gray-700">Kategori: Produktivitas & Teks</span>
                 </a>
             </div>
         </div>
@@ -619,7 +617,7 @@
                 </div>
                 
                 <div data-aos="fade-left" data-aos-delay="100">
-                    <form id="contactForm" class="space-y-6"> <!-- ID untuk formulir kontak utama -->
+                    <form id="contactForm" class="space-y-6">
                         <div>
                             <label for="contact_name" class="block text-sm font-medium text-gray-700">Nama Anda</label>
                             <input type="text" id="contact_name" name="contact_name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
@@ -680,6 +678,7 @@
                         <li><a href="#services" class="text-gray-400 hover:text-white">Layanan</a></li>
                         <li><a href="#portfolio" class="text-gray-400 hover:text-white">Portofolio</a></li>
                         <li><a href="#ebooks" class="text-gray-400 hover:text-white">eBook</a></li>
+                        <li><a href="#ai-tools" class="text-gray-400 hover:text-white">Tools AI</a></li>
                         <li><a href="#contact" class="text-gray-400 hover:text-white">Kontak</a></li>
                     </ul>
                 </div>
@@ -776,7 +775,7 @@
                </div>
            </div>
 
-           <form id="checkoutForm"> <!-- ID untuk form pemesanan eBook -->
+           <form id="checkoutForm">
                <div class="mb-4">
                    <label for="customerName" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
                    <input type="text" id="customerName" name="customerName" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
@@ -819,17 +818,14 @@
         </div>
     </div>
 
-
     <button onclick="scrollToTop()" id="backToTopBtn" title="Kembali ke atas"><i class="fas fa-arrow-up"></i></button>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // --- Variabel Global & State Aplikasi ---
             let cart = [];
             const YOUR_WHATSAPP_NUMBER = "6285320410340"; 
             const CONTACT_FORM_EMAIL_RECIPIENT = "mkohar155@gmail.com";
 
-            // --- Elemen DOM ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const nav = document.querySelector('nav');
@@ -838,11 +834,11 @@
             const portfolioModal = document.getElementById('portfolioModal');
             const portfolioModalContent = document.getElementById('portfolioModalContent');
             const modalProjectName = document.getElementById('modalProjectName');
-            const modalMainImage = document.getElementById('modalMainImage'); // Ditambahkan
-            const modalThumbnailsContainer = document.getElementById('modalThumbnailsContainer'); // Ditambahkan
+            const modalMainImage = document.getElementById('modalMainImage');
+            const modalThumbnailsContainer = document.getElementById('modalThumbnailsContainer');
             const modalProjectType = document.getElementById('modalProjectType');
             const modalProjectDescription = document.getElementById('modalProjectDescription');
-            const modalProjectLinkContainer = document.getElementById('modalProjectLinkContainer'); // Ditambahkan
+            const modalProjectLinkContainer = document.getElementById('modalProjectLinkContainer');
             const modalProjectLink = document.getElementById('modalProjectLink');
             const closePortfolioModalButton = document.getElementById('closePortfolioModal');
 
@@ -1220,7 +1216,7 @@
                 orderSummaryTotal.textContent = formatRupiah(subtotal);
             }
 
-            if (checkoutForm) {
+            if (checkoutForm) { // Form di modal order (untuk WhatsApp)
                 checkoutForm.addEventListener('submit', function(e) {
                     e.preventDefault();
                     let isValid = true;
@@ -1305,7 +1301,7 @@
             if (closeOrderFormModalButtonBottom) closeOrderFormModalButtonBottom.addEventListener('click', () => closeModal(orderFormModal, orderFormModalContent));
             if (orderFormModal) orderFormModal.addEventListener('click', (e) => { if (e.target === orderFormModal) closeModal(orderFormModal, orderFormModalContent); });
 
-            if (contactForm) { // Logika untuk formulir kontak utama
+            if (contactForm) {
                 const nameInput = contactForm.querySelector('#contact_name');
                 const emailInput = contactForm.querySelector('#contact_email');
                 const serviceInput = contactForm.querySelector('#contact_service');
@@ -1369,19 +1365,8 @@
                         const mailtoLink = `mailto:${CONTACT_FORM_EMAIL_RECIPIENT}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
                         window.location.href = mailtoLink;
                         
-                        // Notifikasi lebih sederhana untuk form kontak
                         showToast("Pesan siap dikirim via Email! Periksa aplikasi email Anda.");
-                        // Atau jika ingin pakai modal umum:
-                        /*
-                        if(generalConfirmationModal && generalConfirmationIcon && generalConfirmationTitle && generalConfirmationMessage && generalConfirmationDetails){
-                           generalConfirmationTitle.textContent = "Pesan Kontak Siap Dikirim!";
-                           generalConfirmationMessage.innerHTML = "Silakan periksa aplikasi email Anda dan kirim pesan yang sudah disiapkan.<br>Kami akan segera merespons. Terima kasih!";
-                           generalConfirmationIcon.className = 'fas fa-envelope-open-text text-indigo-500 text-6xl mb-6'; 
-                           generalConfirmationDetails.innerHTML = ''; // Kosongkan detail pesanan
-                           openModal(generalConfirmationModal, generalConfirmationModalContent);
-                        }
-                        */
-
+                        
                         contactForm.reset(); 
                         clearErrorField(nameInput, nameError);
                         clearErrorField(emailInput, emailError);
@@ -1421,4 +1406,3 @@
 </body>
 </html>
 ```
-
